@@ -9,7 +9,26 @@ log_file="script.log"
 # ----- SECTION: Function Definitions -----
 assemble_commands() {
     # COMMANDS=('git init' 'echo "README" > "$DIR_NAME/README.md"' 'git add README.md' 'git commit -m "Initial commit"' 'git add example.txt' 'git commit -m "Add example.txt"' 'git reset --hard HEAD~1')
-    COMMANDS=('git init' 'echo "README" > "README.md"' 'git add README.md')
+    COMMANDS=('git init' 'echo "README" > "README.md"' 'git add README.md' 'git commit -m "Initial commit"' 'echo "Lorem ipsum" > "example.txt"' 'git add example.txt')
+}
+
+create_snapshot() {
+    # Set the target base directory (you can adjust this as needed)
+    TRACKER_DIR="git-db-tracker/"
+
+    # Get the current date and time in the format yyyymmddHHMMSS
+    TIMESTAMP=$(date +"%Y%m%d%H%M%S")
+
+    # Create the target directory with the timestamp
+    DEST_DIR="${TRACKER_DIR}${DIR_NAME}/${TIMESTAMP}"
+    mkdir -p "$DEST_DIR"
+
+    # Copy all files, including hidden files and folders, to the target directory
+    # cp -r "$SOURCE_DIR"/* "$SOURCE_DIR"/.* "$DEST_DIR" 2>/dev/null
+    cp -r "$DIR_NAME/." "$DEST_DIR"
+
+    # Notify the user that the files have been copied
+    log "Files from $SOURCE_DIR have been copied to $DEST_DIR"
 }
 
 create_target_directory() {
@@ -19,20 +38,24 @@ create_target_directory() {
 execute_commands() {
     # Loop through the array
     for command in "${COMMANDS[@]}"; do
+        echo "Running $command"
         log "$DIR_NAME: $command"
 
         # don't log here
-        cd $DIR_NAME
-        eval "$command"
-        cd -
+        cd $DIR_NAME > /dev/null 2>&1 || echo "cd $DIR_NAME failed"
+        #eval "$command" >> "$log_file" 2>&1
+        local output=$(eval "$command" 2>&1)
+        cd -  > /dev/null 2>&1 || echo "cd - failed"
+        log $output
         # end don't log here
 
-        SCRIPT_DIR=$(dirname "$0")
-        "$SCRIPT_DIR/cp-git.sh" "$DIR_NAME"
+        #SCRIPT_DIR=$(dirname "$0")
+        #"$SCRIPT_DIR/cp-git.sh" "$DIR_NAME"
+        create_snapshot
         
-        if [ $? -ne 0 ]; then
-            log "Failed to execute 'cp-git.sh'."
-        fi
+        #if [ $? -ne 0 ]; then
+        #    log "Failed to execute 'cp-git.sh'."
+        #fi
         sleep 1
 
     done
@@ -40,7 +63,6 @@ execute_commands() {
 
 log() {
     local message="$1"
-    # echo "[$(date +"%Y-%m-%d %H:%M:%S")] $message" #| tee -a "$log_file"
     echo "[$(date +"%Y-%m-%d %H:%M:%S")] $message" >> "$log_file"
 }
 
@@ -102,6 +124,9 @@ perform_checks() {
 # ----- SECTION: End Function Definitions -----
 
 # ----- SECTION: Main Section -----
+# Redirect all stdout and stderr to the log file
+# exec > "$log_file" 2>&1
+
 log_header
 perform_checks "$1"
 create_target_directory
