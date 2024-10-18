@@ -1,7 +1,0 @@
-git init
-echo "README" > "README.md"
-git add README.md
-git commit -m "Initial commit"
-echo "Lorem ipsum" > "example.txt"
-git add example.txt
-
