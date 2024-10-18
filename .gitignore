@@ -8,8 +8,10 @@ script.log
 # Exclude all subdirectories
 */
 
-# Re-include the images/ directory
+# Re-include the images/ and commands/ directories
 !images/
+!commands/
 
-# Optionally, ensure files inside images/ are included as well
+# Optionally, ensure files inside images/ and commands/ are included as well
 !images/*
+!commands/*

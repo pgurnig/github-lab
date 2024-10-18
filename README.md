@@ -8,7 +8,7 @@
 
 ## Overview
 
-One of the key scripts in this repository is `runner.sh`, which processes a list of Git commands stored in a file called `commands.gtd` (Git Database). The main goal of the script combined with the command file is to create a local Git repository, perform a series of actions on it, and then take snapshots of the repository's state over time, storing them in a subdirectory called `snapshots`.
+One of the key scripts in this repository is `runner.sh`, which processes a list of Git commands stored in a file called `commands.gtd` (Git Database). The main goal of the script combined with the command file is to create a local Git repository, perform a series of actions on it, and then take snapshots of the repository's state over time, storing them in a subdirectory called `snapshots`. Ultimately, the snapshots are used for comparison to understand how the `.git` directory changes relative to various git commands and working tree changes.
 
 ## ⚠️ Caution
 - **Warning**: `runner.sh` reads commands from `commands.gtd` to initialize, create artifacts, add items and commit based on the sample `commands.gtd` file. There aren't any precautions taken to sanitize what you put in commands.gtd. You can do very bad things if you're not careful, and many things not at all related to `git`.
