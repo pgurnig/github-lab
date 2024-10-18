@@ -1,6 +1,15 @@
-*/
-script.log
+# Files
 .DS_Store
 cp-git.sh
+emoji.md
 README-git-db-reset-hard-2.md
+script.log
 
+# Exclude all subdirectories
+*/
+
+# Re-include the images/ directory
+!images/
+
+# Optionally, ensure files inside images/ are included as well
+!images/*
