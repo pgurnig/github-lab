@@ -1,3 +1,7 @@
+<div style="text-align: center;">
+  <img src="images/git-lab-series-logo.png" alt="git init" width="33%">
+</div>
+
 # GitHub Lab
 
 `github-lab` is a collection of scripts and artifacts aimed at supporting various GitHub analysis projects. This repository contains tools to automate the creation, modification, and tracking of local Git repositories over time. It can be used in conjunction with other repositories that house the analysis results.
