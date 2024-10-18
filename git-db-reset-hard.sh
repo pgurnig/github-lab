@@ -8,8 +8,21 @@ log_file="script.log"
 
 # ----- SECTION: Function Definitions -----
 assemble_commands() {
-    # COMMANDS=('git init' 'echo "README" > "$DIR_NAME/README.md"' 'git add README.md' 'git commit -m "Initial commit"' 'git add example.txt' 'git commit -m "Add example.txt"' 'git reset --hard HEAD~1')
-    COMMANDS=('git init' 'echo "README" > "README.md"' 'git add README.md' 'git commit -m "Initial commit"' 'echo "Lorem ipsum" > "example.txt"' 'git add example.txt')
+    COMMANDS=()
+
+    runner_file="runner.gtd"
+    if [[ -f "$runner_file" ]]; then
+        while IFS= read -r line; do
+            # Skip blank lines and lines starting with '--' or '#'
+            [[ -z "$line" || "$line" =~ ^-- || "$line" =~ ^# ]] && continue
+            
+            # Add the valid command to the COMMANDS array
+            COMMANDS+=("$line")
+        done < "$runner_file"
+    else
+        echo "Error: $runner_file not found!"
+        exit 1
+    fi
 }
 
 create_snapshot() {
