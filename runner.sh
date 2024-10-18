@@ -7,7 +7,7 @@ show_usage() {
     echo
     echo "Parameters:"
     echo "  <subdirectory>                       The name of the subdirectory to create."
-    echo "  [optional_git_db_tracker_directory]  Optional replacement for the default 'git-db-tracker' directory."
+    echo "  [optional_git_db_tracker_directory]  Optional replacement for the default 'snapshots' directory."
     exit 1
 }
 
@@ -30,7 +30,7 @@ assemble_commands() {
     fi
 }
 
-# Create a snapshot in git-db-tracker or the user-specified snapshot directory
+# Create a snapshot in snapshots or the user-specified snapshot directory
 create_snapshot() {
     # Get the current date and time in the format yyyymmddHHMMSS
     timestamp=$(date +"%Y%m%d%H%M%S")
