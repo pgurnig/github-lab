@@ -11,11 +11,11 @@ show_usage() {
     exit 1
 }
 
-# Get the line items from runner.gtd
+# Get the line items from commands.gtd
 assemble_commands() {
     commands=()
 
-    runner_file="runner.gtd"
+    runner_file="commands.gtd"
     if [[ -f "$runner_file" ]]; then
         while IFS= read -r line; do
             # Skip blank lines and lines starting with '--' or '#'
@@ -58,7 +58,7 @@ ensure_trailing_slash() {
     echo "$dir"
 }
 
-# Run the commands in runner.gtd / log the output
+# Run the commands in commands.gtd / log the output
 execute_commands() {
     # Loop through the array
     for command in "${commands[@]}"; do
