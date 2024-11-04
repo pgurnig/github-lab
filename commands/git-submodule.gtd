@@ -1,0 +1,20 @@
+# Create the top-level directory. Add and commit a README file.
+mkdir parent
+cd parent
+git init
+echo "README" > "README.md"
+git add README.md
+git commit -m "Initial commit"
+# Create a child directory. Add and commit a file.
+mkdir submodule
+cd submodule
+git init
+echo "Lorem ipsum" > "example.txt"
+git add example.txt
+git commit -m "Add example.txt"
+# Back to the parent directory. Add the submodule.
+cd ..
+git submodule add ./submodule
+# Add the .gitmodules file and the submodule directory.
+git add .
+git commit -m "Add submodule"
