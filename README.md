@@ -44,6 +44,10 @@ While there are other ways of accomplishing this that don't include taking physi
    ```bash
    ./runner.sh explore-init
    ```
+The named directory, in this case `explore-init` is created at the same level as `runner.sh` while a second directory with all the snapshots is created under `snapshots`.
+
+
+![subdirectory-creation](images/subdirectory-creation.png)
 
 3. **Output**: `runner.sh` will iterate over `commands.gtd` executing the lines one-by-one. A snapshot of the directory will be taken with each successive command and placed in a subdirectory `snapshots/`. Here's an example run:
 
